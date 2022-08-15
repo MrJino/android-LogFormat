@@ -8,7 +8,7 @@ import org.json.JSONObject
 
 object LogFormat {
     private const val MAIN_TAG = "LogFormat_MAIN"
-    private const val JSON_TAG = "LogFormat_JSON"
+    private const val BODY_TAG = "LogFormat_BODY"
     private const val HEAD_TAG = "LogFormat_HEAD"
 
     private var enable: Boolean = false
@@ -73,7 +73,7 @@ object LogFormat {
 
             when {
                 message.startsWith("-->") || message.startsWith("<--") -> {
-                    Log.d(MAIN_TAG, message)
+                    Log.d(BODY_TAG, message)
                 }
                 message.startsWith("{") || message.startsWith("[") -> {
                     json("HTTP", message)
@@ -100,12 +100,12 @@ object LogFormat {
         val delimiter1 = " -------| $title |-----------------------------------------------------------"
         val delimiter2 = delimiter1.replace("[^-]".toRegex(), "-")
 
-        Log.v(JSON_TAG, delimiter1)
+        Log.v(BODY_TAG, delimiter1)
         when (json) {
             is JSONObject -> handleObject(json)
             is JSONArray -> handleArray(json)
         }
-        Log.v(JSON_TAG, delimiter2)
+        Log.v(BODY_TAG, delimiter2)
     }
 
     private fun handleObject(obj: JSONObject?, blank: String = "") {
@@ -115,20 +115,20 @@ object LogFormat {
             obj[key].let { value->
                 when (value) {
                     is JSONObject -> {
-                        Log.v(JSON_TAG, "|$blank $key: {")
+                        Log.v(BODY_TAG, "|$blank $key: {")
                         handleObject(value, "$blank  ")
-                        Log.v(JSON_TAG, "|$blank }")
+                        Log.v(BODY_TAG, "|$blank }")
                     }
                     is JSONArray -> {
                         if (value.length() == 0) {
-                            Log.v(JSON_TAG, "|$blank \"$key\": []")
+                            Log.v(BODY_TAG, "|$blank \"$key\": []")
                         } else {
-                            Log.v(JSON_TAG, "|$blank \"$key\":")
+                            Log.v(BODY_TAG, "|$blank \"$key\":")
                             handleArray(value, blank)
                         }
                     }
                     else -> {
-                        Log.v(JSON_TAG, "|$blank \"$key\": \"$value\"")
+                        Log.v(BODY_TAG, "|$blank \"$key\": \"$value\"")
                     }
                 }
             }
@@ -137,19 +137,19 @@ object LogFormat {
     }
 
     private fun handleArray(array: JSONArray, blank: String = "") {
-        Log.v(JSON_TAG, "| $blank[")
+        Log.v(BODY_TAG, "| $blank[")
         repeat(array.length()) { i ->
             when (val item = array.get(i)) {
                 is JSONObject -> {
-                    Log.v(JSON_TAG, "|  $blank{")
+                    Log.v(BODY_TAG, "|  $blank{")
                     handleObject(item, "$blank   ")
-                    Log.v(JSON_TAG, "|  $blank}")
+                    Log.v(BODY_TAG, "|  $blank}")
                 }
                 else -> {
-                    Log.v(JSON_TAG, "|  $blank \"$item\"")
+                    Log.v(BODY_TAG, "|  $blank \"$item\"")
                 }
             }
         }
-        Log.v(JSON_TAG, "| $blank]")
+        Log.v(BODY_TAG, "| $blank]")
     }
 }

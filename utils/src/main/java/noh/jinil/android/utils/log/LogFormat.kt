@@ -11,7 +11,7 @@ object LogFormat {
     private const val BODY_TAG = "LogFormat_BODY"
     private const val HEAD_TAG = "LogFormat_HEAD"
 
-    private var enable: Boolean = false
+    private var enable: Boolean = true
 
     fun initialize(debuggable: Boolean) {
         enable = debuggable

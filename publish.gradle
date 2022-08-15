@@ -1,0 +1,15 @@
+ext {
+    PUBLISH_GROUP_ID = 'io.github.mrjino'
+    PUBLISH_VERSION = '1.1.0'
+    PUBLISH_ARTIFACT_ID = 'AndroidUtils'
+    PUBLISH_DESCRIPTION = 'android utilities [ex. LogFormat]'
+    PUBLISH_URL = 'https://github.com/MrJino/android-Utils'
+    PUBLISH_LICENSE_NAME = 'The Apache License, Version 2.0'
+    PUBLISH_LICENSE_URL = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    PUBLISH_DEVELOPER_ID = 'for1self'
+    PUBLISH_DEVELOPER_NAME = 'jinil.noh'
+    PUBLISH_DEVELOPER_EMAIL = 'for1self@gmail.com'
+    PUBLISH_SCM_CONNECTION = 'scm:git@github.com:MrJino/android-Utils.git'
+    PUBLISH_SCM_DEVELOPER_CONNECTION = 'scm:git:ssh://github.com:MrJino/android-Utils.git'
+    PUBLISH_SCM_URL = 'https://github.com/MrJino/android-Utils/tree/main'
+}

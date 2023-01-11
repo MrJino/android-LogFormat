@@ -11,19 +11,11 @@ if (secretPropsFile.exists()) {
     ext["nexusPassword"] = System.getenv('NEXUS_PASSWORD')
 }
 
-group = PUBLISH_GROUP_ID
-version = PUBLISH_VERSION
-
 publishing {
-    publications {
-        maven(MavenPublication) {
-            artifact "utils/build/outputs/aar/"+rootProject.name+"-"+version+"-release.aar"
-        }
-    }
     repositories {
         maven {
             name = "nexus"
-            url = "https://gurunun.shop:6302/repository/maven-releases/"
+            url = "https://nexus.gurunun.site/repository/maven-releases/"
             credentials {
                 username = nexusUsername
                 password = nexusPassword

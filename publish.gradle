@@ -1,6 +1,6 @@
 ext {
     PUBLISH_GROUP_ID = 'noh.jinil'
-    PUBLISH_VERSION = '1.4.2'
+    PUBLISH_VERSION = '1.4.7'
     PUBLISH_ARTIFACT_ID = 'AndroidUtils'
     PUBLISH_DESCRIPTION = 'android utilities [ex. LogFormat]'
     PUBLISH_URL = 'https://github.com/MrJino/android-Utils'

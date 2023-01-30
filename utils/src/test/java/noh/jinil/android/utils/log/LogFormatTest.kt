@@ -30,4 +30,10 @@ internal class LogFormatTest {
     fun httpResponse() {
         LogFormat.httpResponse(Gson().toJson(arrayOf(jsonTestData, jsonTestData)))
     }
+
+    @Test
+    @DisplayName("Simple 스트링 테스트")
+    fun simpleTextTest() {
+        LogFormat.receive("null")
+    }
 }

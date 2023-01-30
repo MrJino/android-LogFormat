@@ -55,7 +55,7 @@ object LogFormat {
         if (!enable || log == null) {
             return
         }
-        Log.v(MAIN_TAG, " => $log in [$tag]")
+        Log.i(MAIN_TAG, " => $log in [$tag]")
     }
 
     @JvmStatic
@@ -67,7 +67,7 @@ object LogFormat {
     }
 
     @JvmStatic
-    fun send(data: String) {
+    fun send(data: String?) {
         printJson("Send", data)
     }
 
@@ -75,12 +75,13 @@ object LogFormat {
      * Json 데이터 파싱
      */
     @JvmStatic
-    fun receive(data: String) {
+    fun receive(data: String?) {
         printJson("Receive", data)
     }
 
     @JvmStatic
-    fun httpResponse(message: String) {
+    fun httpResponse(message: String?) {
+        message ?: return
         try {
             message.toByteArray(Charsets.UTF_8)
 
@@ -99,7 +100,10 @@ object LogFormat {
         }
     }
 
-    private fun printJson(title: String, data: String) {
+    @JvmStatic
+    fun printJson(title: String, data: String?) {
+        data ?: return
+
         val builder = StringBuilder()
         if (!enable) {
             return
@@ -108,10 +112,14 @@ object LogFormat {
         val json = try {
             JSONObject(data)
         } catch (e: Exception) {
-            JSONArray(data)
+            try {
+                JSONArray(data)
+            } catch (e: Exception) {
+                data
+            }
         }
 
-        val delimiter1 = " -------| $title |-----------------------------------------------------------"
+        val delimiter1 = "-------| $title |-----------------------------------------------------------"
         val delimiter2 = delimiter1.replace("[^-]".toRegex(), "-")
 
         builder.appendLine()
@@ -119,7 +127,8 @@ object LogFormat {
         when (json) {
             is JSONObject -> handleObject(json)
             is JSONArray -> handleArray(json)
-            else -> null
+            is String -> json + "\n"
+            else -> ""
         }?.let {
             builder.append(it)
         }

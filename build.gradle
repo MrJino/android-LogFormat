@@ -7,5 +7,15 @@ plugins {
 }
 
 apply from: "${rootDir}/publish.gradle"
-apply from: "${rootDir}/scripts/publish-maven-nexus.gradle"
-//apply from: "${rootDir}/scripts/publish-maven-central.gradle"
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            stagingProfileId = sonatypeStagingProfileId
+            username = ossrhUsername
+            password = ossrhPassword
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        }
+    }
+}

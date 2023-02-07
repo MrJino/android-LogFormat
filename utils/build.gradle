@@ -3,8 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-//apply from: "${rootDir}/scripts/publish-maven-nexus.gradle"
-apply from: "${rootDir}/scripts/publish-maven-central.gradle"
+apply from: "${rootDir}/scripts/publish-maven-nexus.gradle"
+//apply from: "${rootDir}/scripts/publish-maven-central.gradle"
 
 android {
     compileSdk 32

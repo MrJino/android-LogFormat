@@ -5,6 +5,7 @@ package noh.jinil.android.utils.log
 import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.math.min
 
 object LogFormat {
     private const val MAIN_TAG = "LogFormat_MAIN"
@@ -12,10 +13,12 @@ object LogFormat {
     private const val HEAD_TAG = "LogFormat_HEAD"
 
     private var enable: Boolean = true
+    private var maxArray: Int = Int.MAX_VALUE
 
     @JvmStatic
-    fun initialize(debuggable: Boolean) {
+    fun initialize(debuggable: Boolean, maxArraySize: Int? = null) {
         enable = debuggable
+        maxArray = maxArraySize ?: maxArray
     }
 
     @JvmStatic
@@ -102,15 +105,15 @@ object LogFormat {
 
     @JvmStatic
     fun printJson(title: String, data: String?) {
-        data ?: return
-
         val builder = StringBuilder()
         if (!enable) {
             return
         }
 
         val json = try {
-            JSONObject(data)
+            data?.let {
+                JSONObject(data)
+            } ?: "Empty Data!!"
         } catch (e: Exception) {
             try {
                 JSONArray(data)
@@ -181,7 +184,7 @@ object LogFormat {
 
         fun handleSeparate() {
             builder.appendLine("|  $blank[")
-            repeat(array.length()) { i ->
+            repeat(min(array.length(), maxArray)) { i ->
                 when (val item = array.get(i)) {
                     is JSONObject -> {
                         builder.appendLine("|  $blank{")

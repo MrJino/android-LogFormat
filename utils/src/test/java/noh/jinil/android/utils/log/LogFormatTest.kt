@@ -36,4 +36,10 @@ internal class LogFormatTest {
     fun simpleTextTest() {
         LogFormat.receive("null")
     }
+
+    @Test
+    @DisplayName("Null 데이터 테스트")
+    fun nullTextTest() {
+        LogFormat.receive(null)
+    }
 }

@@ -11,6 +11,10 @@ object LogFormat {
     private const val MAIN_TAG = "LogFormat_MAIN"
     private const val BODY_TAG = "LogFormat_BODY"
     private const val HEAD_TAG = "LogFormat_HEAD"
+    private const val SEND_TAG = "LogFormat_SEND"
+    private const val RECV_TAG = "LogFormat_RECV"
+    private const val DATA_TAG = "LogFormat_DATA"
+    private const val PREF_TAG = "LogFormat_PREF"
 
     private var enable: Boolean = true
     private var maxArray: Int = Int.MAX_VALUE
@@ -71,7 +75,7 @@ object LogFormat {
 
     @JvmStatic
     fun send(data: String?) {
-        printJson("Send", data)
+        printJson(SEND_TAG, data)
     }
 
     /**
@@ -79,7 +83,17 @@ object LogFormat {
      */
     @JvmStatic
     fun receive(data: String?) {
-        printJson("Receive", data)
+        printJson(RECV_TAG, data)
+    }
+
+    @JvmStatic
+    fun data(data: String?) {
+        printJson(DATA_TAG, data)
+    }
+
+    @JvmStatic
+    fun pref(data: String?) {
+        printJson(PREF_TAG, data)
     }
 
     @JvmStatic
@@ -93,7 +107,7 @@ object LogFormat {
                     Log.d(BODY_TAG, message)
                 }
                 message.startsWith("{") || message.startsWith("[") -> {
-                    printJson("HTTP", message)
+                    printJson(RECV_TAG, message)
                 }
                 else ->
                     Log.d(HEAD_TAG, message)
@@ -104,7 +118,7 @@ object LogFormat {
     }
 
     @JvmStatic
-    fun printJson(title: String, data: String?) {
+    fun printJson(tag: String, data: String?) {
         val builder = StringBuilder()
         if (!enable) {
             return
@@ -122,7 +136,7 @@ object LogFormat {
             }
         }
 
-        val delimiter1 = "-------| $title |-----------------------------------------------------------"
+        val delimiter1 = "-------| $tag |-----------------------------------------------------------"
         val delimiter2 = delimiter1.replace("[^-]".toRegex(), "-")
 
         builder.appendLine()
@@ -136,7 +150,7 @@ object LogFormat {
             builder.append(it)
         }
         builder.appendLine(delimiter2)
-        Log.v(BODY_TAG, builder.toString())
+        Log.v(tag, builder.toString())
     }
 
     private fun handleObject(obj: JSONObject?, blank: String = ""): String? {

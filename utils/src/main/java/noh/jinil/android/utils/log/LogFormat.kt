@@ -148,13 +148,17 @@ object LogFormat {
             else -> ""
         }?.let {
             builder.append(it)
+        } ?: run {
+            return
         }
         builder.appendLine(delimiter2)
         Log.v(tag, builder.toString())
     }
 
     private fun handleObject(obj: JSONObject?, blank: String = ""): String? {
-        obj ?: return null
+        if (obj == null || obj.length() == 0) {
+            return null
+        }
         val builder = StringBuilder()
 
         obj.keys().forEach { key ->

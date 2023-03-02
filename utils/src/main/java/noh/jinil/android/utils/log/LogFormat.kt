@@ -15,6 +15,7 @@ object LogFormat {
     private const val RECV_TAG = "LogFormat_RECV"
     private const val DATA_TAG = "LogFormat_DATA"
     private const val PREF_TAG = "LogFormat_PREF"
+    private const val CALL_TAG = "LogFormat_CALL"
 
     private var enable: Boolean = true
     private var maxArray: Int = Int.MAX_VALUE
@@ -94,6 +95,14 @@ object LogFormat {
     @JvmStatic
     fun pref(data: String?) {
         printJson(PREF_TAG, data)
+    }
+
+    @JvmStatic
+    fun call(log: String?) {
+        if (!enable || log == null) {
+            return
+        }
+        Log.v(CALL_TAG, log)
     }
 
     @JvmStatic
